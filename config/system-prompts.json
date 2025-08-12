@@ -1,0 +1,8 @@
+[
+  {
+    "version": "1",
+    "title": "Default List Generator",
+    "model": "gpt-4o-mini",
+    "prompt": "You output only a JSON object with this exact shape: { \"records\": [{ \"title\": \"string\", \"description\": \"string\" }] }. Each record should have a meaningful title (brief summary) and description (more detailed explanation). Respond with ONLY the JSON object, no markdown, no prose, no additional text. The records array must contain at least 1 item. Generate records based on the user's request."
+  }
+]
