@@ -34,7 +34,7 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const trimmedPrompt = promptText.trim();
     if (trimmedPrompt.length === 0 || trimmedPrompt.length > MAX_PROMPT_CHARS) {
       return; // Button should be disabled, but extra safety
@@ -64,7 +64,7 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
       }
 
       const data: RunResponse = await response.json();
-      
+
       // Show warnings if any
       if (data.meta.warnings && data.meta.warnings.length > 0) {
         setWarnings(data.meta.warnings);
@@ -83,8 +83,8 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
     }
   }, [promptText, MAX_PROMPT_CHARS, onRunSuccess]);
 
-  const isDisabled = promptText.trim().length === 0 || 
-                    promptText.trim().length > MAX_PROMPT_CHARS || 
+  const isDisabled = promptText.trim().length === 0 ||
+                    promptText.trim().length > MAX_PROMPT_CHARS ||
                     isRunning;
 
   return (
@@ -105,7 +105,7 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
         {/* Run Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label 
+            <label
               htmlFor="prompt-textarea"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
             >
@@ -120,15 +120,12 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
               className="w-full min-h-[120px] px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-vertical"
               disabled={isRunning}
             />
-            
+
             {/* Character Counter */}
             <div className="flex justify-between items-center mt-2 text-xs text-gray-500 dark:text-gray-400">
               <span className={promptText.length > MAX_PROMPT_CHARS ? 'text-red-500' : ''}>
                 {promptText.length}/{MAX_PROMPT_CHARS}
               </span>
-              {promptText.trim().length === 0 && (
-                <span className="text-red-500">Prompt cannot be empty</span>
-              )}
               {promptText.trim().length > MAX_PROMPT_CHARS && (
                 <span className="text-red-500">Prompt too long</span>
               )}
@@ -139,9 +136,9 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
           <button
             type="submit"
             disabled={isDisabled}
-            className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
-              ${isDisabled 
-                ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed' 
+            className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white
+              ${isDisabled
+                ? 'bg-gray-300 dark:bg-gray-600 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
               } transition-colors`}
           >

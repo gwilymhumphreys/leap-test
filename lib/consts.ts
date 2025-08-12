@@ -1,15 +1,17 @@
-// Validate required environment variables
+
 function validateRequiredEnvVars() {
   const required = ['OPENAI_API_KEY'];
   const missing = required.filter(key => !process.env[key]);
-  
+
   if (missing.length > 0) {
     throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
   }
 }
 
-// Validate on module load (fail fast)
-validateRequiredEnvVars();
+// Only validate on server side
+if (typeof window === 'undefined') {
+  validateRequiredEnvVars();
+}
 
 export const MAX_RECORDS_PER_RUN =
   parseInt(process.env.MAX_RECORDS_PER_RUN ?? "50");
