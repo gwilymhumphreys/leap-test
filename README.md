@@ -30,23 +30,23 @@ A minimal full-stack web application that generates structured JSON records usin
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Add your OpenAI API key to `.env.local`:
    ```
    OPENAI_API_KEY=your-api-key-here
-   ```
+```
 
 3. **Run the application:**
    ```bash
    npm run dev
    ```
-   
+
    Visit [http://localhost:3000](http://localhost:3000)
 
 ## Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
-- `npm run build` - Build for production  
+- `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run test` - Run all tests
 - `npm run test:watch` - Run tests in watch mode
@@ -61,7 +61,7 @@ All limits and settings can be customized via environment variables in `.env.loc
 OPENAI_API_KEY=your-api-key-here
 
 # Optional (defaults shown)
-OPENAI_MODEL=gpt-4o-mini
+OPENAI_MODEL=gpt-5-nano
 SYSTEM_PROMPT_INDEX=0
 MAX_RECORDS_PER_RUN=50
 MAX_PROMPT_CHARS=2000

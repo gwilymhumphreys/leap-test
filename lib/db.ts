@@ -12,14 +12,14 @@ const initializeSchema = (database: BetterSQLite3Database) => {
   // Create prompts table
   database.run(`
     CREATE TABLE IF NOT EXISTS prompts (
-      id INTEGER PRIMARY KEY,
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
       text TEXT NOT NULL,
       created_at INTEGER NOT NULL,
       updated_at INTEGER NOT NULL
     )
   `);
 
-  // Create records table  
+  // Create records table
   database.run(`
     CREATE TABLE IF NOT EXISTS records (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,7 +33,7 @@ const initializeSchema = (database: BetterSQLite3Database) => {
 
 function createDatabase() {
   const dbPath = SQLITE_PATH;
-  
+
   // Ensure the directory exists for the database file (unless using :memory:)
   if (dbPath !== ':memory:') {
     const dbDir = dirname(dbPath);

@@ -44,7 +44,7 @@ npm run test:watch  # Watch mode
 ## Data Model
 
 **Tables:**
-- `prompts`: Single row (id=1) storing the current prompt with timestamps
+- `prompts`: Single row storing the current prompt with timestamps
 - `records`: Generated records with title/description and timestamps
 
 **Timestamps:** Stored as INTEGER Unix milliseconds (UTC) for SQLite compatibility
@@ -85,7 +85,7 @@ npm run test:watch  # Watch mode
 - `OPENAI_API_KEY` - OpenAI API key for LLM calls
 
 **Optional Environment Variables:**
-- `OPENAI_MODEL` (default: gpt-4o-mini)
+- `OPENAI_MODEL` (default: gpt-5-nano)
 - `SYSTEM_PROMPT_INDEX` (default: 0)
 - `MAX_RECORDS_PER_RUN` (default: 50)
 - `MAX_PROMPT_CHARS` (default: 2000)

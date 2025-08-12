@@ -334,7 +334,7 @@ export const MAX_DESCRIPTION_CHARS =
   parseInt(process.env.MAX_DESCRIPTION_CHARS ?? "2000");
 
 export const SQLITE_PATH = process.env.SQLITE_PATH ?? "./data/app.db";
-export const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+export const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-5-nano";
 export const SYSTEM_PROMPT_INDEX =
   parseInt(process.env.SYSTEM_PROMPT_INDEX ?? "0");
 ```
@@ -348,7 +348,7 @@ Ship `.env.example`; use `.env.local` in dev:
 
 ```
 OPENAI_API_KEY=
-OPENAI_MODEL=gpt-4o-mini
+OPENAI_MODEL=gpt-5-nano
 SYSTEM_PROMPT_INDEX=0
 MAX_RECORDS_PER_RUN=50
 MAX_PROMPT_CHARS=2000
@@ -366,7 +366,7 @@ SQLITE_PATH=./data/app.db
   {
     "version": "1",
     "title": "Default List Generator",
-    "model": "gpt-4o-mini",
+    "model": "gpt-5-nano",
     "prompt": "You output only a JSON object with this exact shape: { \"records\": [{ \"title\": \"string\", \"description\": \"string\" }] } ..."
   }
 ]

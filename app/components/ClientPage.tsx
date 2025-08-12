@@ -51,8 +51,8 @@ export default function ClientPage({ initialPrompt, initialRecords }: ClientPage
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
             Generate Records
           </h2>
-          <RunForm 
-            initialPromptText={prompt?.text ?? ''} 
+          <RunForm
+            initialPromptText={prompt?.text ?? ''}
             currentPromptText={prompt?.text ?? ''}
             onRunSuccess={handleRunSuccess}
           />
@@ -63,7 +63,7 @@ export default function ClientPage({ initialPrompt, initialRecords }: ClientPage
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
             Records {records.length > 0 && `(${records.length})`}
           </h2>
-          <RecordsList initialRecords={records} />
+          <RecordsList records={records} setRecords={setRecords} />
         </section>
       </div>
     </main>

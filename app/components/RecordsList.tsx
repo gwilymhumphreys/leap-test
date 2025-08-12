@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { Record } from '@/lib/schema';
 
 interface RecordsListProps {
-  initialRecords: Record[];
+  records: Record[];
+  setRecords: React.Dispatch<React.SetStateAction<Record[]>>;
 }
 
 interface EditingRecord {
@@ -13,8 +14,7 @@ interface EditingRecord {
   description: string;
 }
 
-export default function RecordsList({ initialRecords }: RecordsListProps) {
-  const [records, setRecords] = useState<Record[]>(initialRecords);
+export default function RecordsList({ records, setRecords }: RecordsListProps) {
   const [editingRecord, setEditingRecord] = useState<EditingRecord | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState<number | null>(null);
@@ -213,14 +213,6 @@ export default function RecordsList({ initialRecords }: RecordsListProps) {
               <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
                 {record.description}
               </p>
-              <div className="mt-3 text-xs text-gray-500 dark:text-gray-400">
-                Created: {new Date(record.createdAt).toLocaleString()}
-                {record.updatedAt !== record.createdAt && (
-                  <span className="ml-3">
-                    Updated: {new Date(record.updatedAt).toLocaleString()}
-                  </span>
-                )}
-              </div>
             </div>
           )}
         </div>

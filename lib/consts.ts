@@ -1,16 +1,9 @@
 
-function validateRequiredEnvVars() {
-  const required = ['OPENAI_API_KEY'];
-  const missing = required.filter(key => !process.env[key]);
-
-  if (missing.length > 0) {
-    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
-  }
-}
-
-// Only validate on server side
+// Only validate on server
 if (typeof window === 'undefined') {
-  validateRequiredEnvVars();
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn('Missing process.env.OPENAI_API_KEY, create a .env.local file with the following content: OPENAI_API_KEY=your_api_key');
+  }
 }
 
 export const MAX_RECORDS_PER_RUN =
@@ -26,6 +19,6 @@ export const MAX_DESCRIPTION_CHARS =
 export const NEXT_PUBLIC_MAX_PROMPT_CHARS = MAX_PROMPT_CHARS;
 
 export const SQLITE_PATH = process.env.SQLITE_PATH ?? "./data/app.db";
-export const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
+export const OPENAI_MODEL = process.env.OPENAI_MODEL ?? "gpt-5-nano";
 export const SYSTEM_PROMPT_INDEX =
   parseInt(process.env.SYSTEM_PROMPT_INDEX ?? "0");

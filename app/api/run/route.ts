@@ -67,7 +67,9 @@ export async function POST(request: Request) {
     // Call LLM
     let llmResponse: string;
     try {
+      console.log('Calling LLM with model:', model);
       llmResponse = await callLlm(messages, model);
+      console.log('LLM response:', llmResponse);
     } catch (error) {
       console.error('LLM call failed:', error);
       return problem(
@@ -99,10 +101,10 @@ export async function POST(request: Request) {
     try {
       // Clear existing records first
       await truncateRecords();
-      
+
       // Update the prompt
       const updatedPrompt = await upsertPrompt(trimmedPrompt);
-      
+
       // Insert all new records
       const insertedRecords = [];
       for (const record of processedRecords) {
@@ -119,7 +121,7 @@ export async function POST(request: Request) {
         records: insertedRecords,
         meta: { warnings }
       });
-      
+
     } catch (error) {
       console.error('Database transaction failed:', error);
       return problem(
