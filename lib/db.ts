@@ -1,6 +1,5 @@
 import Database from 'better-sqlite3';
 import { drizzle, BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import { prompts, records } from './schema';
 import { SQLITE_PATH } from './consts';
 import { mkdirSync } from 'fs';
 import { dirname } from 'path';
@@ -90,4 +89,13 @@ export function resetDatabase() {
   }
   _sqlite = null;
   _db = null;
+}
+
+// Export function to gracefully close database connection
+export function closeDatabase() {
+  if (_sqlite) {
+    _sqlite.close();
+    _sqlite = null;
+    _db = null;
+  }
 }

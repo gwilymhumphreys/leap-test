@@ -6,8 +6,9 @@ describe('Database initialization', () => {
   const testDbPath = join(process.cwd(), '.tmp', 'test.db');
   
   beforeEach(() => {
-    // Set test database path
+    // Set test database path and mock required env vars
     process.env.SQLITE_PATH = testDbPath;
+    process.env.OPENAI_API_KEY = 'test-key';
   });
 
   afterEach(() => {
@@ -20,6 +21,7 @@ describe('Database initialization', () => {
       // Files may not exist, ignore
     }
     delete process.env.SQLITE_PATH;
+    delete process.env.OPENAI_API_KEY;
   });
 
   it('should create database and tables successfully', async () => {
@@ -30,7 +32,7 @@ describe('Database initialization', () => {
     const tables = db.all(`
       SELECT name FROM sqlite_master 
       WHERE type='table' AND name IN ('prompts', 'records')
-    `);
+    `) as { name: string }[];
     
     expect(tables).toHaveLength(2);
     expect(tables.map(t => t.name)).toContain('prompts');

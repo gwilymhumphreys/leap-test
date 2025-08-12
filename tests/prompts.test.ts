@@ -4,6 +4,7 @@ describe('Prompts data access', () => {
   beforeEach(() => {
     // Use in-memory database for each test
     process.env.SQLITE_PATH = ':memory:';
+    process.env.OPENAI_API_KEY = 'test-key';
   });
 
   afterEach(async () => {
@@ -11,6 +12,7 @@ describe('Prompts data access', () => {
     const { resetDatabase } = await import('../lib/db.js');
     resetDatabase();
     delete process.env.SQLITE_PATH;
+    delete process.env.OPENAI_API_KEY;
   });
 
   it('should return null when no prompt exists', async () => {

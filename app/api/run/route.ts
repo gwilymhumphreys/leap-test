@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     let requestBody;
     try {
       requestBody = await request.json();
-    } catch (error) {
+    } catch {
       return problem(
         400,
         'Bad request',

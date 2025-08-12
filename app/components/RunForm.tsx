@@ -2,10 +2,12 @@
 
 import { useState, useCallback } from 'react';
 import { Record } from '@/lib/schema';
+import { NEXT_PUBLIC_MAX_PROMPT_CHARS } from '@/lib/consts';
 
 interface RunFormProps {
   initialPromptText: string;
   currentPromptText: string;
+  onRunSuccess?: (data: RunResponse) => void;
 }
 
 interface RunResponse {
@@ -21,14 +23,14 @@ interface RunResponse {
   };
 }
 
-export default function RunForm({ initialPromptText, currentPromptText }: RunFormProps) {
+export default function RunForm({ initialPromptText, currentPromptText, onRunSuccess }: RunFormProps) {
   const [promptText, setPromptText] = useState(initialPromptText);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string>('');
   const [warnings, setWarnings] = useState<string[]>([]);
 
-  // Get max chars from environment (matching server-side logic)
-  const MAX_PROMPT_CHARS = parseInt(process.env.NEXT_PUBLIC_MAX_PROMPT_CHARS ?? "2000");
+  // Use centralized constant
+  const MAX_PROMPT_CHARS = NEXT_PUBLIC_MAX_PROMPT_CHARS;
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,9 +70,10 @@ export default function RunForm({ initialPromptText, currentPromptText }: RunFor
         setWarnings(data.meta.warnings);
       }
 
-      // Force page reload to show updated records (simple approach)
-      // In a more complex app, we'd update parent state
-      window.location.reload();
+      // Notify parent component of successful run
+      if (onRunSuccess) {
+        onRunSuccess(data);
+      }
 
     } catch (err) {
       setError('Failed to connect to server. Please try again.');
@@ -78,7 +81,7 @@ export default function RunForm({ initialPromptText, currentPromptText }: RunFor
     } finally {
       setIsRunning(false);
     }
-  }, [promptText, MAX_PROMPT_CHARS]);
+  }, [promptText, MAX_PROMPT_CHARS, onRunSuccess]);
 
   const isDisabled = promptText.trim().length === 0 || 
                     promptText.trim().length > MAX_PROMPT_CHARS || 

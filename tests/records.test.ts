@@ -7,6 +7,7 @@ describe('Records data access', () => {
     // Use in-memory database with unique name for each test
     testId = Math.random().toString(36).substring(7);
     process.env.SQLITE_PATH = `:memory:`;
+    process.env.OPENAI_API_KEY = 'test-key';
   });
 
   afterEach(async () => {
@@ -14,6 +15,7 @@ describe('Records data access', () => {
     const { resetDatabase } = await import('../lib/db.js');
     resetDatabase();
     delete process.env.SQLITE_PATH;
+    delete process.env.OPENAI_API_KEY;
   });
 
   it('should list empty records initially', async () => {
