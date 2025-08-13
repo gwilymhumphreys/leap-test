@@ -1,6 +1,6 @@
 # LLM Records
 
-A minimal full-stack app that generates structured JSON records using the OpenAI API.
+A minimal full-stack app that generates structured records using the OpenAI API.
 
 ## Quick Start
 
