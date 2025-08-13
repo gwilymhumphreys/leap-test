@@ -2,12 +2,13 @@
 
 import { useState, useCallback } from 'react';
 import { Record } from '@/lib/schema';
-import { NEXT_PUBLIC_MAX_PROMPT_CHARS } from '@/lib/consts';
+import { NEXT_PUBLIC_MAX_PROMPT_CHARS as MAX_PROMPT_CHARS } from '@/lib/consts';
 
 interface RunFormProps {
   initialPromptText: string;
   currentPromptText: string;
-  onRunSuccess?: (data: RunResponse) => void;
+  onRunSuccess: (data: RunResponse) => void;
+  onLoadingChange?: (isLoading: boolean) => void;
 }
 
 interface RunResponse {
@@ -23,26 +24,34 @@ interface RunResponse {
   };
 }
 
-export default function RunForm({ initialPromptText, currentPromptText, onRunSuccess }: RunFormProps) {
+export default function RunForm({ initialPromptText, currentPromptText, onRunSuccess, onLoadingChange }: RunFormProps) {
   const [promptText, setPromptText] = useState(initialPromptText);
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState<string>('');
   const [warnings, setWarnings] = useState<string[]>([]);
 
-  // Use centralized constant
-  const MAX_PROMPT_CHARS = NEXT_PUBLIC_MAX_PROMPT_CHARS;
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
 
     const trimmedPrompt = promptText.trim();
-    if (trimmedPrompt.length === 0 || trimmedPrompt.length > MAX_PROMPT_CHARS) {
-      return; // Button should be disabled, but extra safety
+    // Button should be disabled, check just in case
+    if (trimmedPrompt.length === 0) {
+      setWarnings(['Prompt cannot be empty']);
+      return;
+    }
+    if (trimmedPrompt.length > MAX_PROMPT_CHARS) {
+      setWarnings([`Prompt too long (${trimmedPrompt.length}/${MAX_PROMPT_CHARS} characters)`]);
+      return;
     }
 
     setIsRunning(true);
     setError('');
     setWarnings([]);
+
+    if (onLoadingChange) {
+      onLoadingChange(true);
+    }
 
     try {
       const response = await fetch('/api/run', {
@@ -65,23 +74,23 @@ export default function RunForm({ initialPromptText, currentPromptText, onRunSuc
 
       const data: RunResponse = await response.json();
 
-      // Show warnings if any
       if (data.meta.warnings && data.meta.warnings.length > 0) {
         setWarnings(data.meta.warnings);
       }
 
-      // Notify parent component of successful run
-      if (onRunSuccess) {
-        onRunSuccess(data);
-      }
+      onRunSuccess(data);
 
     } catch (err) {
       setError('Failed to connect to server. Please try again.');
       console.error('Run API error:', err);
     } finally {
       setIsRunning(false);
+
+      if (onLoadingChange) {
+        onLoadingChange(false);
+      }
     }
-  }, [promptText, MAX_PROMPT_CHARS, onRunSuccess]);
+  }, [promptText, onRunSuccess, onLoadingChange]);
 
   const isDisabled = promptText.trim().length === 0 ||
                     promptText.trim().length > MAX_PROMPT_CHARS ||

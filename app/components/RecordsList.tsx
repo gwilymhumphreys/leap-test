@@ -3,9 +3,30 @@
 import { useState } from 'react';
 import { Record } from '@/lib/schema';
 
+// Skeleton component for loading state
+function RecordSkeleton() {
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 animate-pulse">
+      <div className="flex justify-between items-start mb-3">
+        <div className="bg-gray-300 dark:bg-gray-600 h-6 rounded w-1/2"></div>
+        <div className="flex space-x-2 ml-4">
+          <div className="bg-gray-300 dark:bg-gray-600 h-6 w-6 rounded"></div>
+          <div className="bg-gray-300 dark:bg-gray-600 h-6 w-6 rounded"></div>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <div className="bg-gray-300 dark:bg-gray-600 h-4 rounded w-full"></div>
+        <div className="bg-gray-300 dark:bg-gray-600 h-4 rounded w-4/5"></div>
+        <div className="bg-gray-300 dark:bg-gray-600 h-4 rounded w-3/5"></div>
+      </div>
+    </div>
+  );
+}
+
 interface RecordsListProps {
   records: Record[];
   setRecords: React.Dispatch<React.SetStateAction<Record[]>>;
+  isLoading?: boolean;
 }
 
 interface EditingRecord {
@@ -14,7 +35,7 @@ interface EditingRecord {
   description: string;
 }
 
-export default function RecordsList({ records, setRecords }: RecordsListProps) {
+export default function RecordsList({ records, setRecords, isLoading = false }: RecordsListProps) {
   const [editingRecord, setEditingRecord] = useState<EditingRecord | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState<number | null>(null);
@@ -101,6 +122,17 @@ export default function RecordsList({ records, setRecords }: RecordsListProps) {
       setIsDeleting(null);
     }
   };
+
+  // Show skeleton loading state
+  if (isLoading) {
+    return (
+      <div className="space-y-4">
+        {Array.from({ length: 3 }, (_, index) => (
+          <RecordSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
 
   if (records.length === 0) {
     return (

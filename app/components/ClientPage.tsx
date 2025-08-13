@@ -28,6 +28,11 @@ interface ClientPageProps {
 export default function ClientPage({ initialPrompt, initialRecords }: ClientPageProps) {
   const [prompt, setPrompt] = useState(initialPrompt);
   const [records, setRecords] = useState(initialRecords);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleLoadingChange = (loading: boolean) => {
+    setIsLoading(loading);
+  };
 
   const handleRunSuccess = (data: RunResponse) => {
     setPrompt(data.prompt);
@@ -55,6 +60,7 @@ export default function ClientPage({ initialPrompt, initialRecords }: ClientPage
             initialPromptText={prompt?.text ?? ''}
             currentPromptText={prompt?.text ?? ''}
             onRunSuccess={handleRunSuccess}
+            onLoadingChange={handleLoadingChange}
           />
         </section>
 
@@ -63,7 +69,7 @@ export default function ClientPage({ initialPrompt, initialRecords }: ClientPage
           <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
             Records {records.length > 0 && `(${records.length})`}
           </h2>
-          <RecordsList records={records} setRecords={setRecords} />
+          <RecordsList records={records} setRecords={setRecords} isLoading={isLoading} />
         </section>
       </div>
     </main>
