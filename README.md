@@ -1,16 +1,6 @@
 # LLM Records
 
-A minimal full-stack web application that generates structured JSON records using Large Language Models (LLMs). Built with Next.js 15, SQLite, and OpenAI API.
-
-## Features
-
-- **AI-Powered Record Generation**: Enter prompts to generate structured records via OpenAI API
-- **Real-time CRUD Operations**: Create, read, update, and delete records with inline editing
-- **Robust Validation**: Client and server-side validation with standardized error responses
-- **SQLite Database**: Local persistence with Drizzle ORM
-- **Responsive Design**: Clean Tailwind CSS interface with dark mode support
-- **Type Safety**: Full TypeScript implementation
-- **Comprehensive Testing**: 37 unit tests covering all core functionality
+A minimal full-stack app that generates structured JSON records using the OpenAI API.
 
 ## Quick Start
 
