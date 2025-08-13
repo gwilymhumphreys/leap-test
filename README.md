@@ -34,7 +34,7 @@ A minimal full-stack web application that generates structured JSON records usin
    Add your OpenAI API key to `.env.local`:
    ```
    OPENAI_API_KEY=your-api-key-here
-```
+   ```
 
 3. **Run the application:**
    ```bash
