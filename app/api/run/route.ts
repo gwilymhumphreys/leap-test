@@ -67,9 +67,7 @@ export async function POST(request: Request) {
     // Call LLM
     let llmResponse: string;
     try {
-      console.log('Calling LLM with model:', model);
       llmResponse = await callLlm(messages, model);
-      console.log('LLM response:', llmResponse);
     } catch (error) {
       console.error('LLM call failed:', error);
       return problem(

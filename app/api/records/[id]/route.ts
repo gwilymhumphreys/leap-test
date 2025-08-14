@@ -91,7 +91,7 @@ export async function PATCH(
     if (error instanceof Error && error.message.includes('not found')) {
       return problem(
         404,
-        'Not found',
+        'Record not found',
         `Record with id ${params.id} not found`
       );
     }
@@ -123,13 +123,13 @@ export async function DELETE(
 
     // Delete the record
     await deleteRecord(id);
-    return ok({ ok: true });
+    return new Response(null, { status: 204 });
 
   } catch (error) {
     if (error instanceof Error && error.message.includes('not found')) {
       return problem(
         404,
-        'Not found',
+        'Record not found',
         `Record with id ${params.id} not found`
       );
     }
